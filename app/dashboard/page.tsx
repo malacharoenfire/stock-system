@@ -34,8 +34,15 @@ export default function DashboardPage() {
     setLoading(true);
     try {
       const res = await fetch("/api/products");
-      const data: Product[] = await res.json();
-      setProducts(data);
+     const data = await res.json();
+
+console.log("API PRODUCTS =", data);
+
+if (!Array.isArray(data)) {
+  throw new Error("Products API ไม่ได้ส่ง Array");
+}
+
+setProducts(data);
       setCounts((prev) => {
         const next: CountMap = {};
         data.forEach((p) => {
